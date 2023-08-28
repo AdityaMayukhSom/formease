@@ -72,9 +72,6 @@ async function addMarks(body, email) {
             marks: marks,
             average: cgpaSum / semCount,
         };
-
-        console.log(personDocument);
-
         // Insert the document into the specified collection
         const p = await col.insertOne(personDocument);
 
