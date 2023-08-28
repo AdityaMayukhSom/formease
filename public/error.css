@@ -1,0 +1,10 @@
+.error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.error h3 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 400;
+}

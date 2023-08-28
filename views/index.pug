@@ -1,0 +1,45 @@
+doctype html
+include includes/navbar.pug
+html
+  head
+    title Student Result Form
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="sanitize.css")
+    link(rel="stylesheet", href="style.css")
+    link(rel="stylesheet", href="navbar.css")
+    link(rel="stylesheet", href="error.css")
+  body
+    +navbar(user, description)
+    if user
+      form(action="/submit", method="post" id="cgpa-form")
+        label(for="name") Name:
+        input(type="text", name="name", required, autocomplete='on')
+        br
+
+        label(for="rollNumber") Roll Number:
+        input(type="text", name="rollNumber", required)
+        br
+
+        .lateral-container
+          label(for="lateralEntry") Lateral Entry:
+          input(type="checkbox", name="lateralEntry", id="lateral-entry")
+          br
+
+        label Semester Wise Results:
+        table
+          thead
+            tr
+              th Semester
+              th CGPA
+          tbody#semester-table
+
+        #button-container
+          button(type="button", id="add-semester") Add Semester
+          button(type="button", id="remove-semester") Remove Semester
+        br
+
+        button(type="submit") Submit
+      script(src="script.js")
+    else 
+      div.error
+        h3 you need to login to see the form

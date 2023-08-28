@@ -1,0 +1,22 @@
+{
+  "name": "college_sgpa",
+  "version": "0.0.1",
+  "description": "a simple web app for collecting sgpa of all college students and calculate avg",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "Aditya Mayukh Som",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-openid-connect": "^2.16.0",
+    "mongodb": "^5.8.1",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
