@@ -9,7 +9,7 @@ html
     link(rel="stylesheet", href="navbar.css")
     link(rel="stylesheet", href="error.css")
   body
-    +navbar(user, description)
+    +navbar(user, description, email)
     if user
       form(action="/submit", method="post" id="cgpa-form")
         label(for="name") Name:

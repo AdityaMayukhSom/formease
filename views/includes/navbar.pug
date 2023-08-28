@@ -1,8 +1,9 @@
-mixin navbar(user, description)
+mixin navbar(user, description, email="no email id")
     nav.navbar
         h3= description
-        ul
+        ul.navbar-links
             if user
+                li.navbar-email= email
                 li.nav-item
                     a.nav-link(href="/logout") Logout
             else

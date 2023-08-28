@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
     res.render("index", {
         user: req.oidc.isAuthenticated(),
         description: "Student Result Form",
+        email: req.oidc.user?.email,
     });
 });
 

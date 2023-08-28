@@ -16,7 +16,15 @@
     text-align: left;
 }
 
-@media (max-width: 480px) {
+.navbar .navbar-links {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: left;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
     .navbar {
         flex-direction: column;
         padding-bottom: 0.5rem;
@@ -24,5 +32,15 @@
 
     .navbar h3 {
         text-align: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar .navbar-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
     }
 }
