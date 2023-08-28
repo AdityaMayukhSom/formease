@@ -47,7 +47,7 @@ app.post("/submit", async (req, res) => {
     const body = req.body;
     try {
         await mongodb.addMarks(body, email);
-        res.render("successful");
+        res.render("success");
     } catch (e) {
         res.render("error", { message: e.message });
     }
