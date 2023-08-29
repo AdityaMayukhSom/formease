@@ -63,6 +63,13 @@ async function addMarks(body, email) {
                 });
             }
         }
+
+        if (semCount == 0) {
+            throw new Error(
+                "you need atleast one semester's marks to submit the form, please try again with marks."
+            );
+        }
+
         // Create a new document
         let personDocument = {
             _id: body.rollNumber,
