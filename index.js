@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth } = require("express-openid-connect");
+const { auth, requiresAuth } = require("express-openid-connect");
 const mongodb = require("./src/mongo");
 const {
     PORT,
@@ -7,6 +7,7 @@ const {
     AUTH_ISSUER_BASE_URL,
     AUTH_CLIENT_ID,
     AUTH_BASE_URL,
+    ALLOWED_EMAILS_LIST,
 } = require("./src/config");
 
 const app = express();
@@ -50,6 +51,17 @@ app.post("/submit", async (req, res) => {
         res.render("success");
     } catch (e) {
         res.render("error", { message: e.message });
+    }
+});
+
+app.get("/ranks", requiresAuth(), async (req, res) => {
+    if (!req.oidc.user.email || !ALLOWED_EMAILS_LIST.includes(req.oidc.user.email)) {
+        res.render("error", {
+            message: "you are not allowed to visit ranks list",
+        });
+    } else {
+        const students = await mongodb.getRanksByAverage();
+        res.render("ranks", { students });
     }
 });
 

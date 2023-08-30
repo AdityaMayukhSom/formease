@@ -1,8 +1,4 @@
-const {
-    MONGODB_USERNAME,
-    MONGODB_PASSWORD,
-    MONGODB_DBNAME,
-} = require("./config");
+const { MONGODB_USERNAME, MONGODB_PASSWORD, MONGODB_DBNAME, MONGODB_THIRD_YEAR_COLLECTION_NAME } = require("./config");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
 const uri = new URL("mongodb+srv://ju-sgpa-calculator.bkrtmnl.mongodb.net/");
@@ -26,25 +22,14 @@ async function addMarks(body, email) {
         // Connect to the Atlas cluster
         await client.connect();
         const db = client.db(MONGODB_DBNAME);
-
-        // Reference the "people" collection in the specified database
-        const col = db.collection("third_year");
-
-        const multipleSubmissionFromOneEmail = await col.findOne({
-            email: email,
-        });
+        const col = db.collection(MONGODB_THIRD_YEAR_COLLECTION_NAME);
+        const multipleSubmissionFromOneEmail = await col.findOne({ email: email });
         if (multipleSubmissionFromOneEmail) {
-            throw new Error(
-                "one submission from this email already exists.\ncontact administrator."
-            );
+            throw new Error("one submission from this email already exists.\ncontact administrator.");
         }
-        const alreadyExistingRollNumber = await col.findOne({
-            _id: body.rollNumber,
-        });
+        const alreadyExistingRollNumber = await col.findOne({ _id: body.rollNumber });
         if (alreadyExistingRollNumber) {
-            throw new Error(
-                "already one submission exists for this roll number.\ncontact administrator."
-            );
+            throw new Error("already one submission exists for this roll number.\ncontact administrator.");
         }
 
         const marks = {};
@@ -65,9 +50,7 @@ async function addMarks(body, email) {
         }
 
         if (semCount == 0) {
-            throw new Error(
-                "you need atleast one semester's marks to submit the form, please try again with marks."
-            );
+            throw new Error("you need atleast one semester's marks to submit the form, please try again with marks.");
         }
 
         // Create a new document
@@ -81,15 +64,27 @@ async function addMarks(body, email) {
         };
         // Insert the document into the specified collection
         const p = await col.insertOne(personDocument);
-
-        // Find and return the document
-        // const filter = { "name.last": "Turing" };
-        // const document = await col.findOne(filter);
-        // console.log("Document found:\n" + JSON.stringify(document));
     } finally {
         await client.close();
     }
 }
+
+async function getRanksByAverage() {
+    try {
+        await client.connect(); // Connect to the Atlas cluster
+        const db = client.db(MONGODB_DBNAME);
+        const col = db.collection(MONGODB_THIRD_YEAR_COLLECTION_NAME);
+        const cursor = col.find().sort({ average: -1 });
+        const result = [];
+        for await (const doc of cursor) {
+            result.push(doc);
+        }
+        return result;
+    } finally {
+        await client.close();
+    }
+}
+
 // run().catch(console.dir);
 
-module.exports = { addMarks };
+module.exports = { addMarks, getRanksByAverage };

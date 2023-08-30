@@ -1,0 +1,26 @@
+doctype html
+html
+    head
+        title Student Ranks
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="sanitize.css")
+        link(rel="stylesheet", href="ranks.css")
+    body
+        h1 Student Ranks
+        table
+            thead
+                tr
+                    th Rank
+                    th Roll Number
+                    th Name
+                    th Email
+                    th Average
+
+            tbody
+                each student, index in students
+                    tr
+                        td= index + 1
+                        td= student.rollNumber
+                        td= student.name
+                        td= student.email
+                        td= student.average.toFixed(2)
