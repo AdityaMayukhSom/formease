@@ -72,10 +72,10 @@ async function addMarks(body, email) {
 
         // Create a new document
         let personDocument = {
-            _id: body.rollNumber,
-            name: body.name,
-            email: email,
-            rollNumber: body.rollNumber,
+            _id: body.rollNumber.trim(),
+            name: body.name.trim(),
+            email: email.trim(),
+            rollNumber: body.rollNumber.trim(),
             marks: marks,
             average: cgpaSum / semCount,
         };
